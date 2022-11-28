@@ -1,39 +1,47 @@
-export const taskFactory = (title, desc, dueDate, priority, status, destination) => {
-	let task = {
+import { tasks } from './taskStore';
+
+export const taskFactory = (title, tag, desc, dueDate, priority, status) => {
+	const task = {
 		title,
+        tag,
 		desc,
 		dueDate,
 		priority,
 		status,
-        destination
 	};
 
-    `${destination}`.push(task);
+    tasks.push(task);
+    console.log(tasks);
 
 	return {
-		editTitle() {
-			return prompt('New Title: ');
+        task,
+		editTitle(title) {
+			this.title = title;
 		},
-		editDesc() {
-			return prompt('New Desc: ');
+		editTag(tag) {
+			this.tag = tag;
 		},
-		editDueDate() {
-			return prompt('New DueDate: ');
+		editDesc(desc) {
+			this.desc = desc;
 		},
-		editPriority() {
-			return prompt('New Priority: ');
+		editDueDate(dueDate) {
+			this.dueDate = dueDate;
 		},
-		editStatus() {
-			return prompt('New Status: ');
+		editPriority(priority) {
+			this.priority = priority;
 		},
-        editDestination() {
-			return prompt('New Destination: ');
+		editStatus(status) {
+			this.status = status;
 		},
 	};
 };
 
-export const deleteTask = (arg) => {
-    return 
+export const deleteTask = (title) => {
+    let _title = title;
+    // const index = tasks.indexOf(_title);
+    // if (index > -1) tasks.splice(index, 1);
+    console.log(_title);
+    console.log(tasks);
 }
 
 
