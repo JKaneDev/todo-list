@@ -10,31 +10,32 @@ window.taskFactory = function(title, tag, desc, dueDate, priority, status) {
 		status,
 	};
 
-    tasks.push(task);
-    console.log(tasks);
+    window.tasks.push(task);
+    console.log(window.tasks);
 
 	return {
         task,
 		editTitle(title) {
-			this.title = title;
+			task.title = title;
 		},
 		editTag(tag) {
-			this.tag = tag;
+			task.tag = tag;
 		},
 		editDesc(desc) {
-			this.desc = desc;
+			task.desc = desc;
 		},
 		editDueDate(dueDate) {
-			this.dueDate = dueDate;
+			task.dueDate = dueDate;
 		},
 		editPriority(priority) {
-			this.priority = priority;
+			task.priority = priority;
 		},
 		editStatus(status) {
-			this.status = status;
+			task.status = status;
 		},
 	};
 };
+ 
 
 window.findTaskIndex = function(title) {
     let _title = title;
