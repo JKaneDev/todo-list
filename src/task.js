@@ -1,4 +1,4 @@
-import { tasks } from './taskStore';
+export const tasks = [];
 
 export const taskFactory = (title, tag, desc, dueDate, priority, status) => {
 	const task = {
@@ -7,7 +7,7 @@ export const taskFactory = (title, tag, desc, dueDate, priority, status) => {
 		desc,
 		dueDate,
 		priority,
-		status,
+		status: false,
 	};
 
     tasks.push(task);
@@ -16,32 +16,39 @@ export const taskFactory = (title, tag, desc, dueDate, priority, status) => {
 	return {
         task,
 		editTitle(title) {
-			this.title = title;
+			task.title = title;
 		},
 		editTag(tag) {
-			this.tag = tag;
+			task.tag = tag;
 		},
 		editDesc(desc) {
-			this.desc = desc;
+			task.desc = desc;
 		},
 		editDueDate(dueDate) {
-			this.dueDate = dueDate;
+			task.dueDate = dueDate;
 		},
 		editPriority(priority) {
-			this.priority = priority;
+			task.priority = priority;
 		},
 		editStatus(status) {
-			this.status = status;
+			task.status = status;
 		},
 	};
 };
+ 
+
+export const findTaskIndex = (title) => {
+    let _title = title;
+    const index = tasks.findIndex(task => {
+        return task.title === _title;
+    })
+    console.log(index);
+}
 
 export const deleteTask = (title) => {
     let _title = title;
-    // const index = tasks.indexOf(_title);
-    // if (index > -1) tasks.splice(index, 1);
-    console.log(_title);
+    let taskToDelete = findTaskIndex(_title);
+    tasks.splice(taskToDelete, 1);
     console.log(tasks);
 }
-
 
