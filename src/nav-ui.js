@@ -5,10 +5,11 @@ import checklist from '../assets/checklist.svg';
 import list from '../assets/list.svg';
 import addTaskBtn from '../assets/add.svg';
 import logo from '../assets/logo.svg';
+import deleteProject from '../assets/delete.svg';
 
 const navLinks = Array.from(document.querySelectorAll('.navigation'));
 
-export const addImages = () => {
+export const addImages = (() => {
 	const sideNav = document.querySelector('.side-nav');
 	const navLinks = document.querySelector('.nav-links');
     const navSVGs = Array.from(document.querySelectorAll('.nav-svg'));
@@ -30,7 +31,7 @@ export const addImages = () => {
 
 	const addLink = document.getElementById('add-project');
 	addLink.src = addTaskBtn;
-};
+})();
 
 export const toggleActiveOff = () => {
     navLinks.forEach(link => {
@@ -56,3 +57,27 @@ export const addLinkListeners = ((e) => {
     })
     return 
 })();
+
+export const createNewProject = () => {
+    const newProject = [];
+} 
+
+export const createProjectLink = (projectName) => {
+    const projectNav = document.querySelector('.project-links');
+
+    const projectLink = document.createElement('li');
+    projectLink.classList.add('navigation');
+
+    const projectSVG = document.createElement('img');
+    projectSVG.classList.add('nav-svg');
+    projectSVG.src = checklist;
+
+    projectSVG.innerText = projectName;
+
+    const removeProject = document.createElement('img');
+    removeProject.src = deleteProject;
+
+    projectLink.appendChild(projectSVG);
+    projectLink.appendChild(removeProject);
+    projectNav.appendChild(projectLink);
+}
