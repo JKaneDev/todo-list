@@ -6,6 +6,8 @@ import list from '../assets/list.svg';
 import addTaskBtn from '../assets/add.svg';
 import logo from '../assets/logo.svg';
 
+const navLinks = Array.from(document.querySelectorAll('.navigation'));
+
 export const addImages = () => {
 	const sideNav = document.querySelector('.side-nav');
 	const navLinks = document.querySelector('.nav-links');
@@ -29,3 +31,28 @@ export const addImages = () => {
 	const addLink = document.getElementById('add-project');
 	addLink.src = addTaskBtn;
 };
+
+export const toggleActiveOff = () => {
+    navLinks.forEach(link => {
+        if (link.classList.contains('active')) {
+            link.classList.remove('active')
+        }
+    })
+    return 
+}
+
+export const toggleActiveOn = (e) => {
+    console.log(navLinks);
+    toggleActiveOff();
+    if (!e.target.classList.contains('active')) {
+        e.target.classList.add('active');
+    }
+    return 
+}
+
+export const addLinkListeners = ((e) => {
+    navLinks.forEach(link => {
+        link.addEventListener('click', toggleActiveOn);
+    })
+    return 
+})();
