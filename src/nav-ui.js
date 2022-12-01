@@ -8,6 +8,8 @@ import logo from '../assets/logo.svg';
 import deleteProject from '../assets/delete.svg';
 
 const navLinks = Array.from(document.querySelectorAll('.navigation'));
+const projectLinks = document.querySelector('.project-links');
+
 
 export const addImages = (() => {
 	const sideNav = document.querySelector('.side-nav');
@@ -33,7 +35,7 @@ export const addImages = (() => {
 	addLink.src = addTaskBtn;
 })();
 
-export const toggleActiveOff = () => {
+ const toggleActiveOff = () => {
     navLinks.forEach(link => {
         if (link.classList.contains('active')) {
             link.classList.remove('active')
@@ -42,8 +44,7 @@ export const toggleActiveOff = () => {
     return 
 }
 
-export const toggleActiveOn = (e) => {
-    console.log(navLinks);
+ const toggleActiveOn = (e) => {
     toggleActiveOff();
     if (!e.target.classList.contains('active')) {
         e.target.classList.add('active');
@@ -51,16 +52,28 @@ export const toggleActiveOn = (e) => {
     return 
 }
 
+const openAddProjectModal = (e) => {
+    document.getElementById('add-project-link').style.display = 'none';
+    document.querySelector('.add-project-modal').style.display = 'grid';
+}
+
+const closeAddProjectModal = () => {
+    document.getElementById('add-project-link').style.display = 'flex';
+    document.querySelector('.add-project-modal').style.display = "none";    
+    document.querySelector('.project-name-input').innerText = '';
+}
+
 export const addLinkListeners = ((e) => {
     navLinks.forEach(link => {
         link.addEventListener('click', toggleActiveOn);
-    })
-    return 
-})();
+    });
 
-export const createNewProject = () => {
-    const newProject = [];
-} 
+    const addProjectLink = document.getElementById('add-project-link');
+    addProjectLink.addEventListener('click', openAddProjectModal);
+
+    const closeAddProject = document.querySelector('.close-add-project');
+    closeAddProject.addEventListener('click', closeAddProjectModal);
+})();
 
 export const createProjectLink = (projectName) => {
     const projectNav = document.querySelector('.project-links');

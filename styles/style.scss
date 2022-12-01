@@ -28,7 +28,7 @@
         'nav content content'
         'footer footer footer';
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 80px 1fr 80px;
+    grid-template-rows: 100px 1fr 80px;
     gap: 1rem;
 }
 
@@ -41,6 +41,9 @@
     align-items: center;
     padding: 2rem 1.5rem;
     box-shadow: var(--shadow-alt);
+    margin: 1rem .5rem 0 .5rem;
+    background-color: var(--container-main-color);
+    border-bottom: 2px solid var(--font-main-color);
 }
 
 .site-header-wrapper {
@@ -84,6 +87,11 @@
     transition: var(--transition-main);
 }
 
+.side-nav li.active {
+    background-color: var(--subcontainer-main-color);
+    border-bottom: 2px solid var(--container-alt-color);
+}
+
 .side-nav li:hover {
     cursor: pointer;
     background-color: var(--subcontainer-main-color);
@@ -115,6 +123,54 @@
     background-color: var(--subcontainer-main-color);
     box-shadow: var(--shadow-alt);
     margin-right: .5rem;
+    border-bottom: 2px solid var(--font-main-color);
+}
+
+/* add project modal styling */
+
+.add-project-modal {
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1px;
+    width: 95%;
+    height: 100px;
+    overflow: scroll;
+    border: 2px solid var(--container-main-color);
+    position: relative;
+    right: -.5rem;
+    box-shadow: var(--shadow-alt);
+}
+
+.project-name-input {
+    grid-column: 1 / -1;
+    appearance: none;
+    outline: none;
+    border: 1px solid var(--subcontainer-main-color);
+    background-color: var(--subcontainer-main-color);
+}
+
+.project-name-input:active, .project-name-input:focus {
+    border: 2px solid var(--font-main-color);
+    font-size: 1.3rem;
+    padding-left: 1rem;
+}
+
+.add-book-btn {
+    background-color: rgb(6, 123, 6);
+    border: 1px solid var(--container-main-color);
+    transition: var(--transition-main);
+}
+
+.close-add-project {
+    background-color: rgb(178, 11, 11);
+    border: 1px solid var(--container-main-color);
+    transition: var(--transition-main);
+}
+
+.add-book-btn:hover, .close-add-project:hover {
+    transform: translateY(-2.5%);
+    cursor: pointer;
     border-bottom: 2px solid var(--font-main-color);
 }
 
