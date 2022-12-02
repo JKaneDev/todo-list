@@ -6,7 +6,7 @@ import list from '../assets/list.svg';
 import addTaskBtn from '../assets/add.svg';
 import logo from '../assets/logo.svg';
 import deleteProject from '../assets/delete.svg';
-import { renderAllTasks, renderTodaysTasks, renderWeeksTasks } from './task-display';
+import { renderAllTasks, renderTodaysTasks, renderWeeksTasks, renderTasksByTag } from './task-display';
 
 const navLinks = Array.from(document.querySelectorAll('.navigation'));
 const projectLinks = document.querySelector('.project-links');
@@ -84,6 +84,8 @@ export const addLinkListeners = ((e) => {
     const weekLink = document.getElementById('this-week-link');
     weekLink.addEventListener('click', renderWeeksTasks);
 
+	const odinLink = document.getElementById('odin-link');
+	odinLink.addEventListener('click', renderTasksByTag);
 })();
 
 const createProjectLink = (projectName) => {
@@ -102,6 +104,8 @@ const createProjectLink = (projectName) => {
 	projectLink.appendChild(projectSVG);
     projectLink.appendChild(name);
 	projectNav.appendChild(projectLink);
+
+	projectLink.addEventListener('click', renderTasksByTag);
 };
 
 const addProject = (e) => {
@@ -110,10 +114,4 @@ const addProject = (e) => {
     closeAddProjectModal();
     toggleActiveOff();
 }
-
-const renderTasks = (tag, dueDate) => {
-
-    return 
-}
-
 

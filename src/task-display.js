@@ -119,6 +119,11 @@ export const renderWeeksTasks = (e) => {
     })
 }
 
-const renderTasksByTag = () => {};
-
-const renderTasksByDueDate = () => {};
+export const renderTasksByTag = (e) => {
+	clearDisplay();
+	tasks.forEach(task => {
+		if (task.tag.includes(e.target.innerText)) {
+			createTaskDisplay(task.title, task.dueDate);
+		}
+	})
+};
