@@ -6,6 +6,7 @@ import list from '../assets/list.svg';
 import addTaskBtn from '../assets/add.svg';
 import logo from '../assets/logo.svg';
 import deleteProject from '../assets/delete.svg';
+import { renderAllTasks } from './taskDisplay-ui';
 
 const navLinks = Array.from(document.querySelectorAll('.navigation'));
 const projectLinks = document.querySelector('.project-links');
@@ -74,6 +75,10 @@ export const addLinkListeners = ((e) => {
 	const closeAddProject = document.querySelector('.close-add-project');
 	closeAddProject.addEventListener('click', closeAddProjectModal);
 
+    const homeLink = document.getElementById('home-link');
+    homeLink.addEventListener('click', renderAllTasks);
+    
+
 })();
 
 const createProjectLink = (projectName) => {
@@ -102,7 +107,7 @@ const addProject = (e) => {
 }
 
 const renderTasks = (tag, dueDate) => {
-    
+
     return 
 }
 
