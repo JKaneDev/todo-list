@@ -4,60 +4,96 @@ import edit from '../assets/edit.svg';
 import remove from '../assets/remove.svg';
 
 export const populateTasks = (() => {
-    const gym = taskFactory('Go To Gym', 'Personal', 'Train Hard', 'Today', 'High', false);
-    const shopping = taskFactory('Get Shopping', 'Personal', 'Get Carbs, Healthy Fats & Protein', 'Tomorrow', 'High', false);
-    const codeWars = taskFactory('Code Wars Practice', 'Coding', 'Practice Data Structures', 'This Week', 'Medium', false)
-    const toDoList = taskFactory('Build To-Do List', 'The Odin Project, Coding', 'Javascript Course', 'This Week', 'High', false);
-
+	const gym = taskFactory(
+		'Go To Gym',
+		'Personal',
+		'Train Hard',
+		'Today',
+		'High',
+		false
+	);
+	const shopping = taskFactory(
+		'Get Shopping',
+		'Personal',
+		'Get Carbs, Healthy Fats & Protein',
+		'Tomorrow',
+		'High',
+		false
+	);
+	const codeWars = taskFactory(
+		'Code Wars Practice',
+		'Coding',
+		'Practice Data Structures',
+		'This Week',
+		'Medium',
+		false
+	);
+	const toDoList = taskFactory(
+		'Build To-Do List',
+		'The Odin Project, Coding',
+		'Javascript Course',
+		'This Week',
+		'High',
+		false
+	);
 })();
 
-const createTaskDisplay = (name) => {
-    const taskDisplay = document.querySelector('.content-main');
+const createTaskDisplay = (name, dueDate) => {
+	const taskDisplay = document.querySelector('.content-main');
 
-    const taskLink = document.createElement('div');
-    taskLink.classList.add('task-link');
+	const taskLink = document.createElement('div');
+	taskLink.classList.add('task-link');
 
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.classList.add('checkbox');
+	const checkbox = document.createElement('input');
+	checkbox.type = 'checkbox';
+	checkbox.classList.add('checkbox');
 
-    const taskName = document.createElement('p');
-    taskName.innerText = taskName;
+	const taskName = document.createElement('p');
+	taskName.classList.add('task-name');
+	taskName.innerText = name;
 
-    const detailsBtn = document.createElement('button');
-    detailsBtn.classList.add('details-btn');
+	const detailsBtn = document.createElement('button');
+	detailsBtn.classList.add('details-btn');
+	detailsBtn.innerText = 'Details';
 
-    const taskDueDate = document.createElement('span');
-    taskDueDate.classList.add('task-due-date');
+	const taskDueDate = document.createElement('span');
+	taskDueDate.classList.add('task-due-date');
+	taskDueDate.innerText = dueDate;
 
-    const editTaskBtn = document.createElement('img');
-    editTaskBtn.classList.add('edit-task-btn');
-    editTaskBtn.src = edit;
+	const btnContainer = document.createElement('div');
+	btnContainer.classList.add('btn-container');
 
-    const removeTaskBtn = document.createElement('img');
-    removeTaskBtn.classList.add('remove-task-btn');
-    removeTaskBtn.src = remove;
+	const editTaskBtn = document.createElement('img');
+	editTaskBtn.classList.add('edit-task-btn');
+	editTaskBtn.src = edit;
 
-    taskLink.appendChild(checkbox);
-    taskLink.appendChild(taskName);
-    taskLink.appendChild(detailsBtn);
-    taskLink.appendChild(taskDueDate);
-    taskLink.appendChild(editTaskBtn);
-    taskLink.appendChild(removeTaskBtn);   
+	const removeTaskBtn = document.createElement('img');
+	removeTaskBtn.classList.add('remove-task-btn');
+	removeTaskBtn.src = remove;
 
-    taskDisplay.appendChild(taskLink);
-}
+	taskLink.appendChild(checkbox);
+	taskLink.appendChild(taskName);
+	btnContainer.appendChild(detailsBtn);
+	btnContainer.appendChild(taskDueDate);
+	btnContainer.appendChild(editTaskBtn);
+	btnContainer.appendChild(removeTaskBtn);
+	taskLink.appendChild(btnContainer);
+
+	taskDisplay.appendChild(taskLink);
+};
 
 export const renderAllTasks = (e) => {
-    tasks.forEach(task => {
-        createTaskDisplay(task.title);
-    })
-}
+	const display = document.querySelector('.content-main');
+	if (!display.classList.contains('active')) {
+		tasks.forEach((task) => {
+			createTaskDisplay(task.title, task.dueDate);
+		});
+        display.classList.add('active');
+	} else if (display.classList.contains('active')) {
+        return;
+    }
+};
 
-const renderTasksByTag = () => {
-    
-}
+const renderTasksByTag = () => {};
 
-const renderTasksByDueDate = () => {
-    
-}
+const renderTasksByDueDate = () => {};
