@@ -131,11 +131,11 @@ export const renderTasksByTag = (e) => {
 
 const toggleTaskStatus = (e) => {
 	const taskTitle = e.target.nextSibling.innerText;
-
 	// when checkbox is checked, done status = true, if unchecked, done = false
 	tasks.forEach(task => { 
 		if (task.title == taskTitle) {
 			task.status = !task.status;
+			e.target.parentNode.classList.toggle('done');
 		}
 	});
 }

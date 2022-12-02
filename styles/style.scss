@@ -128,16 +128,13 @@
     transform: scale(1.25);
 }
 
-.navigation #add-project-link {
-}
-
 /* add project modal styling */
 
 .add-project-modal {
     display: none;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 1px;
+    gap: 4px;
     width: 95%;
     height: 100px;
     overflow: scroll;
@@ -154,7 +151,7 @@
     background-color: var(--subcontainer-main-color);
     font-size: 1.3rem;
     padding-left: 1rem;
-    border-radius: 8px;
+    border-radius: 4px;
 }
 
 .project-name-input:active, .project-name-input:focus {
@@ -164,18 +161,18 @@
 
 .add-book-btn {
     background-color: rgb(6, 123, 6);
-    border: 1px solid var(--container-main-color);
+    border: 2px solid  rgb(6, 123, 6);
     transition: var(--transition-main);
 }
 
 .close-add-project {
     background-color: rgb(178, 11, 11);
-    border: 1px solid var(--container-main-color);
+    border: 1px solid rgb(178, 11, 11);
     transition: var(--transition-main);
 }
 
 .add-book-btn, .close-add-project {
-    border-radius: 8px;
+    border-radius: 4px;
 }
 
 .add-book-btn:hover, .close-add-project:hover {
@@ -192,7 +189,138 @@
     box-shadow: var(--shadow-alt);
     margin-right: .5rem;
     border-bottom: 2px solid var(--font-main-color);
+    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
 }
+
+#add-task {
+    height: 38px;
+    width: 38px;
+    filter: invert(47%) sepia(99%) saturate(1654%) hue-rotate(6deg) brightness(92%);
+    transition: var(--transition-main);
+    margin: auto .5rem .5rem auto;
+
+}
+
+#add-task:hover {
+    transform: scale(1.2) rotate(-180deg);
+    cursor: pointer;
+}
+
+.task-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: .35rem .5rem .35rem 1rem;
+    gap: 1rem;
+    background-color: var(--container-main-color);
+    border-radius: .2rem;
+    font-size: 1.5ch;
+    border-left: 2px solid var(--font-main-color);
+    transition: all .2s ease;
+}
+
+.task-link:hover {
+    border-left: 2px solid var(--container-alt-color);
+    transform: translateY(-5%);
+}
+
+.task-link.done {
+    text-decoration: line-through;
+    opacity: 70%;
+}
+
+.task-link .checkbox {
+    appearance: none;
+    background-color: var(--subcontainer-main-color);
+    border: 1px solid var(--font-main-color);
+    padding: 6px;
+    border-radius: 8px;
+    display: inline-block;
+    position: relative;
+}
+
+.checkbox {
+    appearance: none;
+    background-color: var(--body-color);
+    border: 1px solid var(--main-font-color);
+    padding: 6px;
+    display: inline-block;
+    border-radius: 8px;
+    position: relative;
+    cursor: pointer;
+}
+
+.checkbox:hover {
+    border: 2px solid var(--main-font-color);
+    cursor:pointer;
+}
+
+.checkbox:active, .checkbox:checked:active {
+    background-color: var(--container-alt-color);
+    color: var(--alternate-color);
+}
+
+.checkbox:checked:after {
+    content: '\2714';
+    font-size: 11px;
+    border: 1px solid var(--special-font-color);
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    padding: 0.25px 2.5px 1px 2.5px;
+    border-radius: 8px;
+    background-color: var(--container-alt-color);
+    color: var(--subcontainer-main-color);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+}
+
+.task-link p {
+    letter-spacing: .1rem;
+}
+
+.task-link .details-btn {
+    color: var(--font-main-color);
+    background-color: var(--subcontainer-main-color);
+    border: none;
+    padding: .15rem .5rem;
+    border-radius: 4px;
+    margin-right: .35rem;
+    transition: var(--transition-main);
+}
+
+.task-link .details-btn:hover {
+    cursor: pointer;
+    color: var(--container-alt-color);
+}
+
+.task-link .task-due-date {
+    margin-left: auto;
+    margin-right: .35rem;
+}
+
+.task-link .btn-container {
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+    margin-left: auto;
+}
+
+.task-link .btn-container img {
+    transition: var(--transition-main);
+}
+
+.task-link .btn-container img:hover {
+    transform: scale(1.2) translateY(-2.5%);
+    cursor: pointer;
+}
+
+.task-link div img {
+    filter: invert(47%) sepia(99%) saturate(1654%) hue-rotate(6deg) brightness(92%) contrast(95%);
+}
+
 
 .footer {
     grid-area: footer;
