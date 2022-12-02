@@ -71,6 +71,7 @@
     box-shadow: var(--shadow-alt);
     margin-left: .5rem;
     border-bottom: 2px solid var(--font-main-color);
+    overflow:scroll;
 }
 
 .nav-links, .project-links {
@@ -107,8 +108,8 @@
 
 .side-nav img {
     filter: invert(47%) sepia(99%) saturate(1654%) hue-rotate(6deg) brightness(92%) contrast(95%);
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 2rem;
+    width: 2rem;
 }
 
 .side-nav #add-project {
@@ -116,14 +117,18 @@
     height: 2rem;
 }
 
-/* content container styling */
+.side-nav .project-links .remove-project {
+    height: 15px;
+    width: 15px;
+    transition: var(--transition-main);
+    margin-left: 4rem;
+}
 
-.content-main {
-    grid-area: content;
-    background-color: var(--subcontainer-main-color);
-    box-shadow: var(--shadow-alt);
-    margin-right: .5rem;
-    border-bottom: 2px solid var(--font-main-color);
+.side-nav .project-links .remove-project:hover {
+    transform: scale(1.25);
+}
+
+.navigation #add-project-link {
 }
 
 /* add project modal styling */
@@ -136,7 +141,6 @@
     width: 95%;
     height: 100px;
     overflow: scroll;
-    border: 2px solid var(--container-main-color);
     position: relative;
     right: -.5rem;
     box-shadow: var(--shadow-alt);
@@ -148,12 +152,14 @@
     outline: none;
     border: 1px solid var(--subcontainer-main-color);
     background-color: var(--subcontainer-main-color);
+    font-size: 1.3rem;
+    padding-left: 1rem;
+    border-radius: 8px;
 }
 
 .project-name-input:active, .project-name-input:focus {
     border: 2px solid var(--font-main-color);
-    font-size: 1.3rem;
-    padding-left: 1rem;
+
 }
 
 .add-book-btn {
@@ -168,9 +174,23 @@
     transition: var(--transition-main);
 }
 
+.add-book-btn, .close-add-project {
+    border-radius: 8px;
+}
+
 .add-book-btn:hover, .close-add-project:hover {
     transform: translateY(-2.5%);
     cursor: pointer;
+    border-bottom: 2px solid var(--font-main-color);
+}
+
+/* content container styling */
+
+.content-main {
+    grid-area: content;
+    background-color: var(--subcontainer-main-color);
+    box-shadow: var(--shadow-alt);
+    margin-right: .5rem;
     border-bottom: 2px solid var(--font-main-color);
 }
 

@@ -10,14 +10,13 @@ import deleteProject from '../assets/delete.svg';
 const navLinks = Array.from(document.querySelectorAll('.navigation'));
 const projectLinks = document.querySelector('.project-links');
 
-
 export const addImages = (() => {
 	const sideNav = document.querySelector('.side-nav');
 	const navLinks = document.querySelector('.nav-links');
-    const navSVGs = Array.from(document.querySelectorAll('.nav-svg'));
+	const navSVGs = Array.from(document.querySelectorAll('.nav-svg'));
 
-    const siteLogo = document.getElementById('logo');
-    siteLogo.src = logo;
+	const siteLogo = document.getElementById('logo');
+	siteLogo.src = logo;
 
 	const homeLink = document.getElementById('home-svg');
 	homeLink.src = home;
@@ -35,62 +34,76 @@ export const addImages = (() => {
 	addLink.src = addTaskBtn;
 })();
 
- const toggleActiveOff = () => {
-    navLinks.forEach(link => {
-        if (link.classList.contains('active')) {
-            link.classList.remove('active')
-        }
-    })
-    return 
-}
+const toggleActiveOff = () => {
+	navLinks.forEach((link) => {
+		if (link.classList.contains('active')) {
+			link.classList.remove('active');
+		}
+	});
+	return;
+};
 
- const toggleActiveOn = (e) => {
-    toggleActiveOff();
-    if (!e.target.classList.contains('active')) {
-        e.target.classList.add('active');
-    }
-    return 
-}
+const toggleActiveOn = (e) => {
+	toggleActiveOff();
+	if (!e.target.classList.contains('active')) {
+		e.target.classList.add('active');
+	}
+	return;
+};
 
 const openAddProjectModal = (e) => {
-    document.getElementById('add-project-link').style.display = 'none';
-    document.querySelector('.add-project-modal').style.display = 'grid';
-}
+	document.getElementById('add-project-link').style.display = 'none';
+	document.querySelector('.add-project-modal').style.display = 'grid';
+    console.log(document.querySelector('.add-book-btn'));
+
+    document.querySelector('.add-book-btn').onclick = addProject;
+};
 
 const closeAddProjectModal = () => {
-    document.getElementById('add-project-link').style.display = 'flex';
-    document.querySelector('.add-project-modal').style.display = "none";    
-    document.querySelector('.project-name-input').innerText = '';
-}
+	document.getElementById('add-project-link').style.display = '';
+	document.querySelector('.project-name-input').value = '';
+	document.querySelector('.add-project-modal').style.display = 'none';
+};
 
 export const addLinkListeners = ((e) => {
-    navLinks.forEach(link => {
-        link.addEventListener('click', toggleActiveOn);
-    });
+	navLinks.forEach((link) => link.addEventListener('click', toggleActiveOn));
 
-    const addProjectLink = document.getElementById('add-project-link');
-    addProjectLink.addEventListener('click', openAddProjectModal);
+	const addProjectLink = document.getElementById('add-project-link');
+	addProjectLink.addEventListener('click', openAddProjectModal);
 
-    const closeAddProject = document.querySelector('.close-add-project');
-    closeAddProject.addEventListener('click', closeAddProjectModal);
+	const closeAddProject = document.querySelector('.close-add-project');
+	closeAddProject.addEventListener('click', closeAddProjectModal);
+
 })();
 
-export const createProjectLink = (projectName) => {
-    const projectNav = document.querySelector('.project-links');
+const createProjectLink = (projectName) => {
+	const projectNav = document.querySelector('.project-links');
 
-    const projectLink = document.createElement('li');
-    projectLink.classList.add('navigation');
+	const projectLink = document.createElement('li');
+	projectLink.classList.add('navigation');
 
-    const projectSVG = document.createElement('img');
-    projectSVG.classList.add('nav-svg');
-    projectSVG.src = checklist;
+	const projectSVG = document.createElement('img');
+	projectSVG.classList.add('nav-svg');
+	projectSVG.src = checklist;
 
-    projectSVG.innerText = projectName;
+    const name = document.createElement('p');
+    name.innerHTML = projectName;
 
-    const removeProject = document.createElement('img');
-    removeProject.src = deleteProject;
+	projectLink.appendChild(projectSVG);
+    projectLink.appendChild(name);
+	projectNav.appendChild(projectLink);
+};
 
-    projectLink.appendChild(projectSVG);
-    projectLink.appendChild(removeProject);
-    projectNav.appendChild(projectLink);
+const addProject = (e) => {
+    let _projectName = document.querySelector('.project-name-input').value;
+    createProjectLink(_projectName);
+    closeAddProjectModal();
+    toggleActiveOff();
 }
+
+const renderTasks = (tag, dueDate) => {
+    
+    return 
+}
+
+
