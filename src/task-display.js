@@ -47,6 +47,7 @@ const createTaskDisplay = (name, dueDate) => {
 	const checkbox = document.createElement('input');
 	checkbox.type = 'checkbox';
 	checkbox.classList.add('checkbox');
+	checkbox.addEventListener('click', toggleTaskStatus)
 
 	const taskName = document.createElement('p');
 	taskName.classList.add('task-name');
@@ -82,6 +83,12 @@ const createTaskDisplay = (name, dueDate) => {
 	taskDisplay.appendChild(taskLink);
 };
 
+const clearDisplay = () => {
+	const display = document.querySelector('.content-main');
+	display.innerHTML = '';
+	display.classList.remove('active');
+}
+
 export const renderAllTasks = (e) => {
     clearDisplay();
 	const display = document.querySelector('.content-main');
@@ -94,12 +101,6 @@ export const renderAllTasks = (e) => {
         return;
     }
 };
-
-const clearDisplay = () => {
-    const display = document.querySelector('.content-main');
-    display.innerHTML = '';
-    display.classList.remove('active');
-}
 
 export const renderTodaysTasks = (e) => {
     clearDisplay();
@@ -127,3 +128,14 @@ export const renderTasksByTag = (e) => {
 		}
 	})
 };
+
+const toggleTaskStatus = (e) => {
+	const taskTitle = e.target.nextSibling.innerText;
+
+	// when checkbox is checked, done status = true, if unchecked, done = false
+	tasks.forEach(task => { 
+		if (task.title == taskTitle) {
+			task.status = !task.status;
+		}
+	});
+}
