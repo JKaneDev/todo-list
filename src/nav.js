@@ -7,6 +7,7 @@ import addTaskBtn from '../assets/add.svg';
 import logo from '../assets/logo.svg';
 import addTask from '../assets/add-task.svg';
 import { renderAllTasks, renderTodaysTasks, renderWeeksTasks, renderTasksByTag } from './task-display';
+import { renderAddTaskModal } from './add-task-modal';
 
 const navLinks = Array.from(document.querySelectorAll('.navigation'));
 const projectLinks = document.querySelector('.project-links');
@@ -89,6 +90,9 @@ export const addLinkListeners = ((e) => {
 
 	const odinLink = document.getElementById('odin-link');
 	odinLink.addEventListener('click', renderTasksByTag);
+
+	const addTask = document.getElementById('add-task');
+	addTask.addEventListener('click', renderAddTaskModal);
 })();
 
 const createProjectLink = (projectName) => {

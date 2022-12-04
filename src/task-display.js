@@ -2,6 +2,8 @@ import { tasks, taskFactory } from './task';
 import { addLinkListeners } from './nav';
 import edit from '../assets/edit.svg';
 import remove from '../assets/remove.svg';
+import { renderAddTaskModal } from './add-task-modal';
+import addTask from '../assets/add-task.svg';
 
 export const populateTasks = (() => {
 	const gym = taskFactory(
@@ -37,6 +39,14 @@ export const populateTasks = (() => {
 		false
 	);
 })();
+
+const addTaskIcon = () => {
+	const btn = document.createElement('img');
+	btn.setAttribute('id', 'add-task');
+	btn.src = addTask;
+	btn.addEventListener('click', renderAddTaskModal);
+	document.querySelector('.content-main').appendChild(btn);
+}
 
 const createTaskDisplay = (name, dueDate) => {
 	const taskDisplay = document.querySelector('.content-main');
@@ -97,9 +107,11 @@ export const renderAllTasks = (e) => {
 			createTaskDisplay(task.title, task.dueDate);
 		});
         display.classList.add('active');
+		
 	} else if (display.classList.contains('active')) {
         return;
     }
+	addTaskIcon();
 };
 
 export const renderTodaysTasks = (e) => {
@@ -109,6 +121,7 @@ export const renderTodaysTasks = (e) => {
             createTaskDisplay(task.title, task.dueDate);
         }
     })
+	addTaskIcon();
 }
 
 export const renderWeeksTasks = (e) => {
@@ -118,6 +131,7 @@ export const renderWeeksTasks = (e) => {
             createTaskDisplay(task.title, task.dueDate);
         }
     })
+	addTaskIcon();
 }
 
 export const renderTasksByTag = (e) => {
@@ -127,6 +141,7 @@ export const renderTasksByTag = (e) => {
 			createTaskDisplay(task.title, task.dueDate);
 		}
 	})
+	addTaskIcon();
 };
 
 const toggleTaskStatus = (e) => {
