@@ -1,4 +1,4 @@
-import { taskFactory } from "./task";
+import { taskFactory, tasks } from "./task";
 
 const modalTitle = () => {
     const modalTaskTitle = document.createElement('input');
@@ -61,7 +61,7 @@ const appendDateAndTag = () => {
 
 const lowPriorityBtn = () => {
     const lowBtn = document.createElement('button');
-    lowBtn.classList.add('modal-btn');
+    lowBtn.classList.add('priority-btn', 'modal-btn');
     lowBtn.setAttribute('id', 'low-priority');
     lowBtn.innerText = 'Low';
 
@@ -70,7 +70,7 @@ const lowPriorityBtn = () => {
 
 const medPriorityBtn = () => {
     const mediumBtn = document.createElement('button');
-    mediumBtn.classList.add('modal-btn');
+    mediumBtn.classList.add('priority-btn', 'modal-btn');
     mediumBtn.setAttribute('id', 'medium-priority');
     mediumBtn.innerText = 'Medium';
 
@@ -79,7 +79,7 @@ const medPriorityBtn = () => {
 
 const highPriorityBtn = () => {
     const highBtn = document.createElement('button');
-    highBtn.classList.add('modal-btn');
+    highBtn.classList.add('priority-btn', 'modal-btn');
     highBtn.setAttribute('id', 'high-priority');
     highBtn.innerText = 'High';
 
@@ -140,6 +140,8 @@ const toggleModalActive = () => {
 const addListeners = () => {
     document.getElementById('exit-modal').addEventListener('click', closeModal);
     document.getElementById('confirm-add-task').addEventListener('click', getTaskFromInput);
+    const priorityBtns = Array.from(document.querySelectorAll('.priority-btn'));
+    priorityBtns.forEach(btn => btn.addEventListener('click', () => btn.classList.add('active')));
 }
 
 
@@ -176,14 +178,26 @@ export const renderAddTaskModal = () => {
  }
 
  const getPriorityFromModal = () => {
-    
+    let priority;
+    Array.from(document.querySelectorAll('.priority-btn')).forEach(btn => {
+        if (btn.classList.contains('active')) {
+            priority = btn.innerText;
+        }
+    });
+    return priority;
  }
 
  const getTaskFromInput = () => {
-    const newTask = taskFactory('title', 'tag', 'desc', 'due date', 'priority', false);
 
-    newTask.title = document.querySelector('.modal-title').value;
-    newTask.desc = document.querySelector('.modal-desc').value;
-    newTask.date = document.querySelector('.modal-due-date').value;
+    const title = document.querySelector('.modal-title').value;
+    const tag = document.querySelector('.tag-input').value;
+    const desc = document.querySelector('.modal-desc').value;
+    const date = document.querySelector('.modal-due-date').value;
+    const priority = getPriorityFromModal();
+    const status = false;
 
+    const newTask = taskFactory(title, tag, desc, date, priority, status);
+    
+    closeModal();
+    
  }
