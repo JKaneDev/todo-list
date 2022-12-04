@@ -1,3 +1,5 @@
+import { taskFactory } from "./task";
+
 const modalTitle = () => {
     const modalTaskTitle = document.createElement('input');
     modalTaskTitle.classList.add('modal-title');
@@ -30,6 +32,31 @@ const modalDueDate = () => {
     modalDateContainer.appendChild(modalDueDate);
 
     return modalDateContainer;
+}
+
+const modalTagInput = () => {
+    const tagInput = document.createElement('input');
+    tagInput.setAttribute('type', 'text');
+    tagInput.setAttribute('placeholder', "Tag: E.g. 'The Odin Project', 'Personal'");
+    tagInput.classList.add('tag-input');
+    return tagInput;
+}
+
+const dateTagWrapper = () => {
+    const wrapper = document.createElement('div');
+    wrapper.setAttribute('id', 'date-tag-wrapper');
+    return wrapper;
+}
+
+const appendDateAndTag = () => {
+    const wrapper = dateTagWrapper();
+    const date = modalDueDate();
+    const tag = modalTagInput();
+
+    wrapper.appendChild(date);
+    wrapper.appendChild(tag);
+
+    return wrapper;
 }
 
 const lowPriorityBtn = () => {
@@ -69,16 +96,25 @@ const cancelBtn = () => {
 }
 
 const appendBtns = (low, med, high, cancel, confirm) => {
+    const btnWrapper = document.createElement('div');
+    btnWrapper.setAttribute('id', 'modal-btn-wrapper');
+
     const priorityBtnContainer = document.createElement('div');
     priorityBtnContainer.classList.add('priority-btn-container');
+
+    const toggleModalBtns = document.createElement('div');
+    toggleModalBtns.classList.add('toggle-modal-btns');
+
     priorityBtnContainer.appendChild(low);
     priorityBtnContainer.appendChild(med);
     priorityBtnContainer.appendChild(high);
-    priorityBtnContainer.appendChild(cancel);
-    priorityBtnContainer.appendChild(confirm);
+    toggleModalBtns.appendChild(cancel);
+    toggleModalBtns.appendChild(confirm);
     
+    btnWrapper.appendChild(priorityBtnContainer);
+    btnWrapper.appendChild(toggleModalBtns);
 
-    return priorityBtnContainer;
+    return btnWrapper;
 }
 
 const confirmBtn = () => {
@@ -90,13 +126,30 @@ const confirmBtn = () => {
     return confirmBtn;
 }
 
+const toggleModalActive = () => {
+    const container = document.querySelector('.container');
+    const modal = document.querySelector('.modal-add-task');
+    container.classList.toggle('modal-active');
+    if (container.classList.contains('modal-active')) {
+        modal.style.filter = 'blur(0)';
+        container.style.filter = 'blur(3px)';
+    }
+}
+
+
+const addListeners = () => {
+    document.getElementById('exit-modal').addEventListener('click', closeModal);
+    document.getElementById('confirm-add-task').addEventListener('click', getTaskFromInput);
+}
+
+
 export const renderAddTaskModal = () => {
 	const addTaskModal = document.createElement('div');
 	addTaskModal.classList.add('modal-add-task');
 
     const title = modalTitle();
     const desc = modalDesc();
-    const date = modalDueDate();
+    const dateAndTag = appendDateAndTag();
     const low = lowPriorityBtn();
     const med = medPriorityBtn();
     const high = highPriorityBtn();
@@ -107,8 +160,30 @@ export const renderAddTaskModal = () => {
 
     addTaskModal.appendChild(title);
     addTaskModal.appendChild(desc);
-    addTaskModal.appendChild(date);
+    addTaskModal.appendChild(dateAndTag);
     addTaskModal.appendChild(btns);
 
-    document.querySelector('.content-main').appendChild(addTaskModal);
+    document.querySelector('.body').appendChild(addTaskModal);
+    toggleModalActive();
+    addListeners();
 };
+
+ const closeModal = () => {
+    const body = document.querySelector('.body');
+    body.removeChild(document.querySelector('.modal-add-task'));
+    toggleModalActive();
+    document.querySelector('.container').style.filter = 'blur(0)';
+ }
+
+ const getPriorityFromModal = () => {
+    
+ }
+
+ const getTaskFromInput = () => {
+    const newTask = taskFactory('title', 'tag', 'desc', 'due date', 'priority', false);
+
+    newTask.title = document.querySelector('.modal-title').value;
+    newTask.desc = document.querySelector('.modal-desc').value;
+    newTask.date = document.querySelector('.modal-due-date').value;
+
+ }
