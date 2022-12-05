@@ -1,4 +1,4 @@
-import { tasks, taskFactory, checkTagsForNewCategory } from './task';
+import { tasks, taskFactory, checkTagsForNewCategory, findTaskIndex, deleteTask } from './task';
 import { addLinkListeners } from './nav';
 import edit from '../assets/edit.svg';
 import remove from '../assets/remove.svg';
@@ -81,6 +81,7 @@ const createTaskDisplay = (name, dueDate) => {
 	const removeTaskBtn = document.createElement('img');
 	removeTaskBtn.classList.add('remove-task-btn');
 	removeTaskBtn.src = remove;
+	removeTaskBtn.addEventListener('click', deleteTask);
 
 	taskLink.appendChild(checkbox);
 	taskLink.appendChild(taskName);
@@ -153,3 +154,4 @@ const toggleTaskStatus = (e) => {
 		}
 	});
 };
+

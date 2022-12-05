@@ -48,11 +48,15 @@ export const findTaskIndex = (title) => {
 	console.log(index);
 };
 
-export const deleteTask = (title) => {
-	let _title = title;
+export const deleteTask = (e) => {
+	//assign title of task in current link to title
+	let _title = e.target.parentNode.parentNode.firstChild.nextSibling.innerText;
+
 	let taskToDelete = findTaskIndex(_title);
 	tasks.splice(taskToDelete, 1);
-	console.log(tasks);
+
+	//remove target link from task display
+	document.querySelector('.content-main').removeChild(e.target.parentNode.parentNode);
 };
 
 export const checkTagsForNewCategory = () => {
