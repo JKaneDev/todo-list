@@ -1,4 +1,4 @@
-import { tasks, taskFactory } from './task';
+import { tasks, taskFactory, checkTagsForNewCategory } from './task';
 import { addLinkListeners } from './nav';
 import edit from '../assets/edit.svg';
 import remove from '../assets/remove.svg';
@@ -10,7 +10,7 @@ export const populateTasks = (() => {
 		'Go To Gym',
 		'Personal',
 		'Train Hard',
-		'Today',
+		'Today ',
 		'High',
 		false
 	);
@@ -32,7 +32,7 @@ export const populateTasks = (() => {
 	);
 	const toDoList = taskFactory(
 		'Build To-Do List',
-		'The Odin Project, Coding',
+		'The Odin Project',
 		'Javascript Course',
 		'This Week',
 		'High',
@@ -46,7 +46,7 @@ const addTaskIcon = () => {
 	btn.src = addTask;
 	btn.addEventListener('click', renderAddTaskModal);
 	document.querySelector('.content-main').appendChild(btn);
-}
+};
 
 const createTaskDisplay = (name, dueDate) => {
 	const taskDisplay = document.querySelector('.content-main');
@@ -57,7 +57,7 @@ const createTaskDisplay = (name, dueDate) => {
 	const checkbox = document.createElement('input');
 	checkbox.type = 'checkbox';
 	checkbox.classList.add('checkbox');
-	checkbox.addEventListener('click', toggleTaskStatus)
+	checkbox.addEventListener('click', toggleTaskStatus);
 
 	const taskName = document.createElement('p');
 	taskName.classList.add('task-name');
@@ -97,60 +97,59 @@ const clearDisplay = () => {
 	const display = document.querySelector('.content-main');
 	display.innerHTML = '';
 	display.classList.remove('active');
-}
+};
 
 export const renderAllTasks = (e) => {
-    clearDisplay();
+	clearDisplay();
 	const display = document.querySelector('.content-main');
 	if (!display.classList.contains('active')) {
 		tasks.forEach((task) => {
 			createTaskDisplay(task.title, task.dueDate);
 		});
-        display.classList.add('active');
-		
+		display.classList.add('active');
 	} else if (display.classList.contains('active')) {
-        return;
-    }
+		return;
+	}
 	addTaskIcon();
 };
 
 export const renderTodaysTasks = (e) => {
-    clearDisplay();
-    tasks.forEach(task => {
-        if (task.dueDate == 'Today') {
-            createTaskDisplay(task.title, task.dueDate);
-        }
-    })
+	clearDisplay();
+	tasks.forEach((task) => {
+		if (task.dueDate == 'Today') {
+			createTaskDisplay(task.title, task.dueDate);
+		}
+	});
 	addTaskIcon();
-}
+};
 
 export const renderWeeksTasks = (e) => {
-    clearDisplay();
-    tasks.forEach(task => {
-        if (task.dueDate == 'This Week') {
-            createTaskDisplay(task.title, task.dueDate);
-        }
-    })
+	clearDisplay();
+	tasks.forEach((task) => {
+		if (task.dueDate == 'This Week') {
+			createTaskDisplay(task.title, task.dueDate);
+		}
+	});
 	addTaskIcon();
-}
+};
 
 export const renderTasksByTag = (e) => {
 	clearDisplay();
-	tasks.forEach(task => {
+	tasks.forEach((task) => {
 		if (task.tag.includes(e.target.innerText)) {
 			createTaskDisplay(task.title, task.dueDate);
 		}
-	})
+	});
 	addTaskIcon();
 };
 
 const toggleTaskStatus = (e) => {
 	const taskTitle = e.target.nextSibling.innerText;
 	// when checkbox is checked, done status = true, if unchecked, done = false
-	tasks.forEach(task => { 
+	tasks.forEach((task) => {
 		if (task.title == taskTitle) {
 			task.status = !task.status;
 			e.target.parentNode.classList.toggle('done');
 		}
 	});
-}
+};

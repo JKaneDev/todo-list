@@ -1,20 +1,24 @@
+import { createProjectLink } from './nav';
+
 export const tasks = [];
+export const projects = [];
 
 export const taskFactory = (title, tag, desc, dueDate, priority, status) => {
 	const task = {
 		title,
-        tag,
+		tag,
 		desc,
 		dueDate,
 		priority,
 		status: false,
 	};
-
-    tasks.push(task);
-    console.log(tasks);
+	
+	tasks.push(task);
+	if (!projects.includes(task.tag)) projects.push(task.tag);
+	
 
 	return {
-        task,
+		task,
 		editTitle(title) {
 			task.title = title;
 		},
@@ -35,20 +39,26 @@ export const taskFactory = (title, tag, desc, dueDate, priority, status) => {
 		},
 	};
 };
- 
 
 export const findTaskIndex = (title) => {
-    let _title = title;
-    const index = tasks.findIndex(task => {
-        return task.title === _title;
-    })
-    console.log(index);
-}
+	let _title = title;
+	const index = tasks.findIndex((task) => {
+		return task.title === _title;
+	});
+	console.log(index);
+};
 
 export const deleteTask = (title) => {
-    let _title = title;
-    let taskToDelete = findTaskIndex(_title);
-    tasks.splice(taskToDelete, 1);
-    console.log(tasks);
-}
+	let _title = title;
+	let taskToDelete = findTaskIndex(_title);
+	tasks.splice(taskToDelete, 1);
+	console.log(tasks);
+};
 
+export const checkTagsForNewCategory = () => {
+	const projectNames = Array.from(document.querySelectorAll('.project-name'));
+	projects.forEach(project => {
+		console.log(project);
+		createProjectLink(project);
+	})
+};

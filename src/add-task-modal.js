@@ -1,4 +1,4 @@
-import { taskFactory, tasks } from "./task";
+import { taskFactory, tasks, checkTagsForNewCategory } from "./task";
 
 const modalTitle = () => {
     const modalTaskTitle = document.createElement('input');
@@ -198,6 +198,8 @@ export const renderAddTaskModal = () => {
 
     const newTask = taskFactory(title, tag, desc, date, priority, status);
     
+    checkTagsForNewCategory();
     closeModal();
     
  }
+

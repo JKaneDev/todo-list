@@ -29,9 +29,6 @@ export const addImages = (() => {
 	const thisWeekLink = document.getElementById('this-week-svg');
 	thisWeekLink.src = thisWeek;
 
-	const projectsLink = document.getElementById('projects-svg');
-	projectsLink.src = checklist;
-
 	const addLink = document.getElementById('add-project');
 	addLink.src = addTaskBtn;
 
@@ -88,18 +85,15 @@ export const addLinkListeners = ((e) => {
     const weekLink = document.getElementById('this-week-link');
     weekLink.addEventListener('click', renderWeeksTasks);
 
-	const odinLink = document.getElementById('odin-link');
-	odinLink.addEventListener('click', renderTasksByTag);
-
 	const addTask = document.getElementById('add-task');
 	addTask.addEventListener('click', renderAddTaskModal);
 })();
 
-const createProjectLink = (projectName) => {
+export const createProjectLink = (projectName) => {
 	const projectNav = document.querySelector('.project-links');
 
 	const projectLink = document.createElement('li');
-	projectLink.classList.add('navigation');
+	projectLink.classList.add('navigation', 'project');
 
 	const projectSVG = document.createElement('img');
 	projectSVG.classList.add('nav-svg');
