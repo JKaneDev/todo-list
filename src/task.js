@@ -45,24 +45,66 @@ export const findTaskIndex = (title) => {
 	const index = tasks.findIndex((task) => {
 		return task.title === _title;
 	});
-	console.log(index);
 };
+
+const projectStillExists = (tag) => {
+	tasks.forEach(task => {
+		if (task.tag === tag) {
+			return true;
+		}
+	})
+	return false;
+}
+
+const getDeletedTaskTag = (title) => {
+	let task = tasks.find(task => task.title == title);
+	let tag = task.tag;
+	return tag;
+}
 
 export const deleteTask = (e) => {
 	//assign title of task in current link to title
 	let _title = e.target.parentNode.parentNode.firstChild.nextSibling.innerText;
 
+	//gets deleted task tag from tasks array
+	const tag = getDeletedTaskTag(_title);
+	console.log(projects);
+
+	//replaces old projects array with updated array, excluding deleted tasks project 
+	const updatedProjects = projects.filter(project => project !== tag);
+	projects.splice(0, projects.length, ...updatedProjects);
+
+	//find task index, removes task from task array
 	let taskToDelete = findTaskIndex(_title);
 	tasks.splice(taskToDelete, 1);
 
+	//iterate back over tasks, if tag is still present in other tasks, add back to projects array
+	updateProjectsArray();
+
 	//remove target link from task display
 	document.querySelector('.content-main').removeChild(e.target.parentNode.parentNode);
+	console.log(projects);
+
+	updateProjectLinks();
 };
 
+const updateProjectsArray = () => {
+	tasks.forEach(task => {
+		if (!projects.includes(task.tag)) projects.push(task.tag);
+	})
+}
+
+const updateProjectLinks = () => {
+	const links = document.querySelectorAll('.project');
+	for (let i = 0; i < links.length; i++) {
+		links[i].remove();
+	}
+	checkTagsForNewCategory();
+	console.log(links);
+}
+
 export const checkTagsForNewCategory = () => {
-	const projectNames = Array.from(document.querySelectorAll('.project-name'));
 	projects.forEach(project => {
-		console.log(project);
 		createProjectLink(project);
 	})
 };
