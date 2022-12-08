@@ -12,7 +12,7 @@ import { renderAddTaskModal } from './add-task-modal';
 const navLinks = Array.from(document.querySelectorAll('.navigation'));
 const projectLinks = document.querySelector('.project-links');
 
-export const addImages = (() => {
+export const addImages = () => {
 	const sideNav = document.querySelector('.side-nav');
 	const navLinks = document.querySelector('.nav-links');
 	const navSVGs = Array.from(document.querySelectorAll('.nav-svg'));
@@ -34,7 +34,7 @@ export const addImages = (() => {
 
 	const addTaskSVG = document.getElementById('add-task')
 	addTaskSVG.src = addTask;
-})();
+};
 
 const toggleActiveOff = () => {
 	navLinks.forEach((link) => {
@@ -67,7 +67,7 @@ const closeAddProjectModal = () => {
 	document.querySelector('.add-project-modal').style.display = 'none';
 };
 
-export const addLinkListeners = ((e) => {
+export const addLinkListeners = (e) => {
 	navLinks.forEach((link) => link.addEventListener('click', toggleActiveOn));
 
 	const addProjectLink = document.getElementById('add-project-link');
@@ -87,13 +87,14 @@ export const addLinkListeners = ((e) => {
 
 	const addTask = document.getElementById('add-task');
 	addTask.addEventListener('click', renderAddTaskModal);
-})();
+};
 
 export const createProjectLink = (projectName) => {
 	const projectNav = document.querySelector('.project-links');
 
 	const projectLink = document.createElement('li');
 	projectLink.classList.add('navigation', 'project');
+	projectLink.setAttribute('id', `${projectName}`);
 
 	const projectSVG = document.createElement('img');
 	projectSVG.classList.add('nav-svg');
@@ -115,4 +116,3 @@ const addProject = (e) => {
     closeAddProjectModal();
     toggleActiveOff();
 }
-

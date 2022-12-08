@@ -1,7 +1,11 @@
 import '../styles/style.scss';
 import { addImages } from './nav';
-import { tasks, taskFactory, findTaskIndex, deleteTask, checkTagsForNewCategory } from './task';
-import { addLinkListeners, addProject } from './nav';
-import { populateTasks } from './task-display';
+import { tasks, taskFactory, findTaskIndex, checkTagsForNewCategory } from './task';
+import { addLinkListeners } from './nav';
+import { populateTasks, renderAllTasks } from './task-display';
 
-checkTagsForNewCategory();
+document.addEventListener('DOMContentLoaded', addImages);
+document.addEventListener('DOMContentLoaded', populateTasks);
+document.addEventListener('DOMContentLoaded', checkTagsForNewCategory);
+document.addEventListener('DOMContentLoaded', renderAllTasks);
+document.addEventListener('DOMContentLoaded', addLinkListeners);

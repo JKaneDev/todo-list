@@ -1,4 +1,4 @@
-import { taskFactory, tasks, checkTagsForNewCategory } from "./task";
+import { taskFactory, tasks, checkTagsForNewCategory, updateProjectLinks } from "./task";
 
 const modalTitle = () => {
     const modalTaskTitle = document.createElement('input');
@@ -136,14 +136,12 @@ const toggleModalActive = () => {
     }
 }
 
-
 const addListeners = () => {
     document.getElementById('exit-modal').addEventListener('click', closeModal);
     document.getElementById('confirm-add-task').addEventListener('click', getTaskFromInput);
     const priorityBtns = Array.from(document.querySelectorAll('.priority-btn'));
     priorityBtns.forEach(btn => btn.addEventListener('click', () => btn.classList.add('active')));
 }
-
 
 export const renderAddTaskModal = () => {
 	const addTaskModal = document.createElement('div');
@@ -198,8 +196,8 @@ export const renderAddTaskModal = () => {
 
     const newTask = taskFactory(title, tag, desc, date, priority, status);
     
+    updateProjectLinks();
     checkTagsForNewCategory();
     closeModal();
-    
  }
 

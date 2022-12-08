@@ -5,12 +5,12 @@ import remove from '../assets/remove.svg';
 import { renderAddTaskModal } from './add-task-modal';
 import addTask from '../assets/add-task.svg';
 
-export const populateTasks = (() => {
+export const populateTasks = () => {
 	const gym = taskFactory(
 		'Go To Gym',
 		'Personal',
 		'Train Hard',
-		'Today ',
+		'Today',
 		'High',
 		false
 	);
@@ -38,7 +38,7 @@ export const populateTasks = (() => {
 		'High',
 		false
 	);
-})();
+}
 
 const addTaskIcon = () => {
 	const btn = document.createElement('img');
@@ -117,7 +117,7 @@ export const renderAllTasks = (e) => {
 export const renderTodaysTasks = (e) => {
 	clearDisplay();
 	tasks.forEach((task) => {
-		if (task.dueDate == 'Today') {
+		if (task.dueDate.toLowerCase() == 'today') {
 			createTaskDisplay(task.title, task.dueDate);
 		}
 	});
@@ -127,7 +127,7 @@ export const renderTodaysTasks = (e) => {
 export const renderWeeksTasks = (e) => {
 	clearDisplay();
 	tasks.forEach((task) => {
-		if (task.dueDate == 'This Week') {
+		if (task.dueDate.toLowerCase() == 'this week') {
 			createTaskDisplay(task.title, task.dueDate);
 		}
 	});
@@ -137,7 +137,7 @@ export const renderWeeksTasks = (e) => {
 export const renderTasksByTag = (e) => {
 	clearDisplay();
 	tasks.forEach((task) => {
-		if (task.tag.includes(e.target.innerText)) {
+		if (task.tag.toLowerCase().includes(e.target.innerText.toLowerCase())) {
 			createTaskDisplay(task.title, task.dueDate);
 		}
 	});

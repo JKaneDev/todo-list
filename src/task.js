@@ -68,7 +68,6 @@ export const deleteTask = (e) => {
 
 	//gets deleted task tag from tasks array
 	const tag = getDeletedTaskTag(_title);
-	console.log(projects);
 
 	//replaces old projects array with updated array, excluding deleted tasks project 
 	const updatedProjects = projects.filter(project => project !== tag);
@@ -83,7 +82,6 @@ export const deleteTask = (e) => {
 
 	//remove target link from task display
 	document.querySelector('.content-main').removeChild(e.target.parentNode.parentNode);
-	console.log(projects);
 
 	updateProjectLinks();
 };
@@ -94,17 +92,16 @@ const updateProjectsArray = () => {
 	})
 }
 
-const updateProjectLinks = () => {
+export const updateProjectLinks = () => {
 	const links = document.querySelectorAll('.project');
 	for (let i = 0; i < links.length; i++) {
 		links[i].remove();
 	}
-	checkTagsForNewCategory();
-	console.log(links);
 }
 
 export const checkTagsForNewCategory = () => {
 	projects.forEach(project => {
 		createProjectLink(project);
 	})
+	const projectLinks = document.querySelectorAll('.project');
 };
