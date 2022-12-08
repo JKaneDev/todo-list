@@ -103,8 +103,11 @@ export const createProjectLink = (projectName) => {
     const name = document.createElement('p');
     name.innerHTML = projectName;
 
+	const remove = _removeButton();
+
 	projectLink.appendChild(projectSVG);
     projectLink.appendChild(name);
+	projectLink.appendChild(remove);
 	projectNav.appendChild(projectLink);
 
 	projectLink.addEventListener('click', renderTasksByTag);
@@ -115,4 +118,16 @@ const addProject = (e) => {
     createProjectLink(_projectName);
     closeAddProjectModal();
     toggleActiveOff();
+}
+
+const _removeButton = () => {
+	const btn = document.createElement('button');
+	btn.innerText = 'Remove';
+	btn.classList.add('remove-project-btn');
+	btn.addEventListener('click', removeProject);
+	return btn;
+}
+
+const removeProject = (e) => {
+	return 
 }

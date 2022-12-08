@@ -1,9 +1,9 @@
-import { tasks, taskFactory, checkTagsForNewCategory, findTaskIndex, deleteTask } from './task';
-import { addLinkListeners } from './nav';
+import { tasks, taskFactory, deleteTask } from './task';
 import edit from '../assets/edit.svg';
 import remove from '../assets/remove.svg';
 import { renderAddTaskModal } from './add-task-modal';
 import addTask from '../assets/add-task.svg';
+import { taskDetailsModal } from './task-details-modal';
 
 export const populateTasks = () => {
 	const gym = taskFactory(
@@ -17,7 +17,7 @@ export const populateTasks = () => {
 	const shopping = taskFactory(
 		'Get Shopping',
 		'Personal',
-		'Get Carbs, Healthy Fats & Protein',
+		'Get Something Delicious',
 		'Tomorrow',
 		'High',
 		false
@@ -66,6 +66,7 @@ const createTaskDisplay = (name, dueDate) => {
 	const detailsBtn = document.createElement('button');
 	detailsBtn.classList.add('details-btn');
 	detailsBtn.innerText = 'Details';
+	detailsBtn.addEventListener('click', viewTaskDetails);
 
 	const taskDueDate = document.createElement('span');
 	taskDueDate.classList.add('task-due-date');
@@ -155,3 +156,20 @@ const toggleTaskStatus = (e) => {
 	});
 };
 
+const viewTaskDetails = (e) => {
+	let _title = e.target.parentNode.parentNode.firstChild.nextSibling.innerText;
+	let task = tasks.find(task => task.title === _title);
+	console.log(task);
+
+	const modal = taskDetailsModal();
+	document.querySelector('.body').appendChild(modal);
+	document.querySelector('.container').style.filter = 'blur(3px)';
+	
+
+	document.querySelector('.details-task-title').innerText = task.title;
+	document.querySelector('.details-project-name').innerText = task.tag;
+	document.querySelector('.details-priority-value').innerText = task.priority;
+	document.querySelector('.details-date-value').innerText = task.dueDate;
+	document.querySelector('.details-desc-text').innerText = task.desc;
+
+}
