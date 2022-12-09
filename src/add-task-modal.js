@@ -1,203 +1,247 @@
-import { taskFactory, tasks, checkTagsForNewCategory, updateProjectLinks } from "./task";
+import {
+	taskFactory,
+	tasks,
+	checkTagsForNewCategory,
+	updateProjectLinks,
+} from './task';
+import { preventDuplicates } from './edit-task-display';
+import {
+	renderAllTasks,
+	renderTodaysTasks,
+	renderWeeksTasks,
+	renderTasksByTag,
+} from './task-display';
 
 const modalTitle = () => {
-    const modalTaskTitle = document.createElement('input');
-    modalTaskTitle.classList.add('modal-title');
-    modalTaskTitle.setAttribute('type', 'text');
-    modalTaskTitle.setAttribute('placeholder', "Title: E.g. 'Go To Gym', 'Cook Dinner");
+	const modalTaskTitle = document.createElement('input');
+	modalTaskTitle.classList.add('modal-title');
+	modalTaskTitle.setAttribute('type', 'text');
+	modalTaskTitle.setAttribute(
+		'placeholder',
+		"Title: E.g. 'Go To Gym', 'Cook Dinner"
+	);
 
-    return modalTaskTitle;
-}
+	return modalTaskTitle;
+};
 
 const modalDesc = () => {
-    const modalTaskDesc = document.createElement('textarea');
-    modalTaskDesc.classList.add('modal-desc');
-    modalTaskDesc.setAttribute('type', 'text');
-    modalTaskDesc.setAttribute('placeholder', "Description: E.g. 'Upper Body High Volume Workout'");
+	const modalTaskDesc = document.createElement('textarea');
+	modalTaskDesc.classList.add('modal-desc');
+	modalTaskDesc.setAttribute('type', 'text');
+	modalTaskDesc.setAttribute(
+		'placeholder',
+		"Description: E.g. 'Upper Body High Volume Workout'"
+	);
 
-    return modalTaskDesc;
-}
+	return modalTaskDesc;
+};
 
 const modalDueDate = () => {
-    const modalDateContainer = document.createElement('div');
-    const dateText = document.createElement('p');
-    const modalDueDate = document.createElement('input');
-    modalDateContainer.classList.add('modal-date-container');
-    dateText.innerText = 'Due Date: ';
-    modalDueDate.classList.add('modal-due-date');
-    modalDueDate.setAttribute('type', 'date');
-    modalDueDate.setAttribute('placeholder', "yyyy/mm/dd");
+	const modalDateContainer = document.createElement('div');
+	const dateText = document.createElement('p');
+	const modalDueDate = document.createElement('input');
+	modalDateContainer.classList.add('modal-date-container');
+	dateText.innerText = 'Due Date: ';
+	modalDueDate.classList.add('modal-due-date');
+	modalDueDate.setAttribute('type', 'date');
+	modalDueDate.setAttribute('placeholder', 'yyyy/mm/dd');
 
-    modalDateContainer.appendChild(dateText)
-    modalDateContainer.appendChild(modalDueDate);
+	modalDateContainer.appendChild(dateText);
+	modalDateContainer.appendChild(modalDueDate);
 
-    return modalDateContainer;
-}
+	return modalDateContainer;
+};
 
 const modalTagInput = () => {
-    const tagInput = document.createElement('input');
-    tagInput.setAttribute('type', 'text');
-    tagInput.setAttribute('placeholder', "Tag: E.g. 'The Odin Project', 'Personal'");
-    tagInput.classList.add('tag-input');
-    return tagInput;
-}
+	const tagInput = document.createElement('input');
+	tagInput.setAttribute('type', 'text');
+	tagInput.setAttribute(
+		'placeholder',
+		"Tag: E.g. 'The Odin Project', 'Personal'"
+	);
+	tagInput.classList.add('tag-input');
+	return tagInput;
+};
 
 const dateTagWrapper = () => {
-    const wrapper = document.createElement('div');
-    wrapper.setAttribute('id', 'date-tag-wrapper');
-    return wrapper;
-}
+	const wrapper = document.createElement('div');
+	wrapper.setAttribute('id', 'date-tag-wrapper');
+	return wrapper;
+};
 
 const appendDateAndTag = () => {
-    const wrapper = dateTagWrapper();
-    const date = modalDueDate();
-    const tag = modalTagInput();
+	const wrapper = dateTagWrapper();
+	const date = modalDueDate();
+	const tag = modalTagInput();
 
-    wrapper.appendChild(date);
-    wrapper.appendChild(tag);
+	wrapper.appendChild(date);
+	wrapper.appendChild(tag);
 
-    return wrapper;
-}
+	return wrapper;
+};
 
 const lowPriorityBtn = () => {
-    const lowBtn = document.createElement('button');
-    lowBtn.classList.add('priority-btn', 'modal-btn');
-    lowBtn.setAttribute('id', 'low-priority');
-    lowBtn.innerText = 'Low';
+	const lowBtn = document.createElement('button');
+	lowBtn.classList.add('priority-btn', 'modal-btn');
+	lowBtn.setAttribute('id', 'low-priority');
+	lowBtn.innerText = 'Low';
 
-    return lowBtn;
-}
+	return lowBtn;
+};
 
 const medPriorityBtn = () => {
-    const mediumBtn = document.createElement('button');
-    mediumBtn.classList.add('priority-btn', 'modal-btn');
-    mediumBtn.setAttribute('id', 'medium-priority');
-    mediumBtn.innerText = 'Medium';
+	const mediumBtn = document.createElement('button');
+	mediumBtn.classList.add('priority-btn', 'modal-btn');
+	mediumBtn.setAttribute('id', 'medium-priority');
+	mediumBtn.innerText = 'Medium';
 
-    return mediumBtn;
-}
+	return mediumBtn;
+};
 
 const highPriorityBtn = () => {
-    const highBtn = document.createElement('button');
-    highBtn.classList.add('priority-btn', 'modal-btn');
-    highBtn.setAttribute('id', 'high-priority');
-    highBtn.innerText = 'High';
+	const highBtn = document.createElement('button');
+	highBtn.classList.add('priority-btn', 'modal-btn');
+	highBtn.setAttribute('id', 'high-priority');
+	highBtn.innerText = 'High';
 
-    return highBtn;
-}
+	return highBtn;
+};
 
 const cancelBtn = () => {
-    const cancelBtn = document.createElement('button');
-    cancelBtn.classList.add('modal-btn');
-    cancelBtn.setAttribute('id', 'exit-modal');
-    cancelBtn.innerText = 'Cancel';
+	const cancelBtn = document.createElement('button');
+	cancelBtn.classList.add('modal-btn');
+	cancelBtn.setAttribute('id', 'exit-modal');
+	cancelBtn.innerText = 'Cancel';
 
-    return cancelBtn;
-}
+	return cancelBtn;
+};
 
 const appendBtns = (low, med, high, cancel, confirm) => {
-    const btnWrapper = document.createElement('div');
-    btnWrapper.setAttribute('id', 'modal-btn-wrapper');
+	const btnWrapper = document.createElement('div');
+	btnWrapper.setAttribute('id', 'modal-btn-wrapper');
 
-    const priorityBtnContainer = document.createElement('div');
-    priorityBtnContainer.classList.add('priority-btn-container');
+	const priorityBtnContainer = document.createElement('div');
+	priorityBtnContainer.classList.add('priority-btn-container');
 
-    const toggleModalBtns = document.createElement('div');
-    toggleModalBtns.classList.add('toggle-modal-btns');
+	const toggleModalBtns = document.createElement('div');
+	toggleModalBtns.classList.add('toggle-modal-btns');
 
-    priorityBtnContainer.appendChild(low);
-    priorityBtnContainer.appendChild(med);
-    priorityBtnContainer.appendChild(high);
-    toggleModalBtns.appendChild(cancel);
-    toggleModalBtns.appendChild(confirm);
-    
-    btnWrapper.appendChild(priorityBtnContainer);
-    btnWrapper.appendChild(toggleModalBtns);
+	priorityBtnContainer.appendChild(low);
+	priorityBtnContainer.appendChild(med);
+	priorityBtnContainer.appendChild(high);
+	toggleModalBtns.appendChild(cancel);
+	toggleModalBtns.appendChild(confirm);
 
-    return btnWrapper;
-}
+	btnWrapper.appendChild(priorityBtnContainer);
+	btnWrapper.appendChild(toggleModalBtns);
+
+	return btnWrapper;
+};
 
 const confirmBtn = () => {
-    const confirmBtn = document.createElement('button');
-    confirmBtn.classList.add('modal-btn');
-    confirmBtn.setAttribute('id', 'confirm-add-task');
-    confirmBtn.innerText = 'Confirm';
+	const confirmBtn = document.createElement('button');
+	confirmBtn.classList.add('modal-btn');
+	confirmBtn.setAttribute('id', 'confirm-add-task');
+	confirmBtn.innerText = 'Confirm';
 
-    return confirmBtn;
-}
+	return confirmBtn;
+};
 
 const toggleModalActive = () => {
-    const container = document.querySelector('.container');
-    const modal = document.querySelector('.modal-add-task');
-    container.classList.toggle('modal-active');
-    if (container.classList.contains('modal-active')) {
-        modal.style.filter = 'blur(0)';
-        container.style.filter = 'blur(3px)';
-    }
-}
+	const container = document.querySelector('.container');
+	const modal = document.querySelector('.modal-add-task');
+	container.classList.toggle('modal-active');
+	if (container.classList.contains('modal-active')) {
+		modal.style.filter = 'blur(0)';
+		container.style.filter = 'blur(3px)';
+	}
+};
 
 const addListeners = () => {
-    document.getElementById('exit-modal').addEventListener('click', closeModal);
-    document.getElementById('confirm-add-task').addEventListener('click', getTaskFromInput);
-    const priorityBtns = Array.from(document.querySelectorAll('.priority-btn'));
-    priorityBtns.forEach(btn => btn.addEventListener('click', () => btn.classList.add('active')));
-}
+	document.getElementById('exit-modal').addEventListener('click', closeModal);
+	document
+		.getElementById('confirm-add-task')
+		.addEventListener('click', getTaskFromInput);
+	const priorityBtns = Array.from(document.querySelectorAll('.priority-btn'));
+	priorityBtns.forEach((btn) =>
+		btn.addEventListener('click', () => btn.classList.add('active'))
+	);
+};
 
 export const renderAddTaskModal = () => {
 	const addTaskModal = document.createElement('div');
 	addTaskModal.classList.add('modal-add-task');
 
-    const title = modalTitle();
-    const desc = modalDesc();
-    const dateAndTag = appendDateAndTag();
-    const low = lowPriorityBtn();
-    const med = medPriorityBtn();
-    const high = highPriorityBtn();
-    const cancel = cancelBtn();
-    const confirm = confirmBtn();
+	const title = modalTitle();
+	const desc = modalDesc();
+	const dateAndTag = appendDateAndTag();
+	const low = lowPriorityBtn();
+	const med = medPriorityBtn();
+	const high = highPriorityBtn();
+	const cancel = cancelBtn();
+	const confirm = confirmBtn();
 
-    const btns = appendBtns(low, med, high, cancel, confirm);
+	const btns = appendBtns(low, med, high, cancel, confirm);
 
-    addTaskModal.appendChild(title);
-    addTaskModal.appendChild(desc);
-    addTaskModal.appendChild(dateAndTag);
-    addTaskModal.appendChild(btns);
+	addTaskModal.appendChild(title);
+	addTaskModal.appendChild(desc);
+	addTaskModal.appendChild(dateAndTag);
+	addTaskModal.appendChild(btns);
 
-    document.querySelector('.body').appendChild(addTaskModal);
-    toggleModalActive();
-    addListeners();
+	document.querySelector('.body').appendChild(addTaskModal);
+	toggleModalActive();
+	addListeners();
 };
 
- const closeModal = () => {
-    const body = document.querySelector('.body');
-    body.removeChild(document.querySelector('.modal-add-task'));
-    toggleModalActive();
-    document.querySelector('.container').style.filter = 'blur(0)';
- }
+const closeModal = () => {
+	const body = document.querySelector('.body');
+	body.removeChild(document.querySelector('.modal-add-task'));
+	toggleModalActive();
+	document.querySelector('.container').style.filter = 'blur(0)';
+};
 
- const getPriorityFromModal = () => {
-    let priority;
-    Array.from(document.querySelectorAll('.priority-btn')).forEach(btn => {
-        if (btn.classList.contains('active')) {
-            priority = btn.innerText;
-        }
-    });
-    return priority;
- }
+const getPriorityFromModal = () => {
+	let priority;
+	Array.from(document.querySelectorAll('.priority-btn')).forEach((btn) => {
+		if (btn.classList.contains('active')) {
+			priority = btn.innerText;
+		}
+	});
+	return priority;
+};
 
- const getTaskFromInput = () => {
+const updateDisplay = () => {
+	const display = document.querySelector('.content-main');
+	switch (true) {
+		case display.classList.contains('home-view'):
+			renderAllTasks();
+		case display.classList.contains('today-view'):
+			renderTodaysTasks();
+		case display.classList.contains('week-view'):
+			renderWeeksTasks();
+	}
+};
 
-    const title = document.querySelector('.modal-title').value;
-    const tag = document.querySelector('.tag-input').value;
-    const desc = document.querySelector('.modal-desc').value;
-    const date = document.querySelector('.modal-due-date').value;
-    const priority = getPriorityFromModal();
-    const status = false;
+/* Bugs
+    - Tasks only render when the text of the link is clicked, 
+    must display when any part of the link is clicked, except remove button
+    - inputted text dates must be formatted. E.g. 'today, tomorrow etc'
+*/
 
-    const newTask = taskFactory(title, tag, desc, date, priority, status);
-    
-    updateProjectLinks();
-    checkTagsForNewCategory();
-    closeModal();
- }
+const getTaskFromInput = () => {
+	const title = document.querySelector('.modal-title').value;
+	const tag = document.querySelector('.tag-input').value;
+	const desc = document.querySelector('.modal-desc').value;
+	const date = document.querySelector('.modal-due-date').value;
+	const priority = getPriorityFromModal();
+	const status = false;
 
+	preventDuplicates(title);
+	const newTask = taskFactory(title, tag, desc, date, priority, status);
+
+	updateProjectLinks();
+	checkTagsForNewCategory();
+	closeModal();
+	updateDisplay();
+	console.log(tasks);
+};

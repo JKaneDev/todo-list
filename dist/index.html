@@ -10,9 +10,8 @@
 			type="css"
 		/>
 		<title>DO IT</title>
-		<script defer src="bundle.js"></script>
-	</head>
-	<body>
+	<script defer src="bundle.js"></script></head>
+	<body class="body">
 		<div class="container">
 			<header class="header">
 				<div class="site-header-wrapper">
@@ -23,15 +22,15 @@
 			<nav class="side-nav">
 				<h2>Categories</h2>
 				<ul class="nav-links">
-					<li class="navigation">
+					<li class="navigation" id="home-link">
 						<img src="" alt="home-svg" class="nav-svg" id="home-svg" />
 						<p>Home</p>
 					</li>
-					<li class="navigation">
+					<li class="navigation" id="today-link">
 						<img src="" alt="today-svg" class="nav-svg" id="today-svg" />
 						<p>Today</p>
 					</li>
-					<li class="navigation">
+					<li class="navigation" id="this-week-link">
 						<img
 							src=""
 							alt="this-week-svg"
@@ -52,19 +51,17 @@
 						/>
 						<p>Add Project</p>
 					</li>
-					<li class="navigation">
-						<img src="" alt="project-svg" class="nav-svg" id="projects-svg" />
-						<p>The Odin Project</p>
-					</li>
 
 					<div class="add-project-modal">
 						<input type="text" class="project-name-input" />
-						<button class="add-project-btn">Add</button>
+						<button class="add-book-btn">Add</button>
 						<button class="close-add-project">Cancel</button>
 					</div>
 				</ul>
 			</nav>
-			<div class="content-main"></div>
+			<div class="content-main">
+				<img src="" alt="add task" id="add-task" />
+			</div>
 		</div>
 		<footer class="footer">
 			Copyright &copy; <a href="https://github.com/JamesKane00">jkane 2022</a>

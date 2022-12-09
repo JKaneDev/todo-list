@@ -4,6 +4,7 @@ import remove from '../assets/remove.svg';
 import { renderAddTaskModal } from './add-task-modal';
 import addTask from '../assets/add-task.svg';
 import { taskDetailsModal } from './task-details-modal';
+import { renderEditTaskModal } from './edit-task-display';
 
 export const populateTasks = () => {
 	const gym = taskFactory(
@@ -78,6 +79,7 @@ const createTaskDisplay = (name, dueDate) => {
 	const editTaskBtn = document.createElement('img');
 	editTaskBtn.classList.add('edit-task-btn');
 	editTaskBtn.src = edit;
+	editTaskBtn.addEventListener('click', renderEditTaskModal);
 
 	const removeTaskBtn = document.createElement('img');
 	removeTaskBtn.classList.add('remove-task-btn');
@@ -98,7 +100,8 @@ const createTaskDisplay = (name, dueDate) => {
 const clearDisplay = () => {
 	const display = document.querySelector('.content-main');
 	display.innerHTML = '';
-	display.classList.remove('active');
+	display.removeAttribute('class');
+	display.classList.add('content-main');
 };
 
 export const renderAllTasks = (e) => {
@@ -108,7 +111,7 @@ export const renderAllTasks = (e) => {
 		tasks.forEach((task) => {
 			createTaskDisplay(task.title, task.dueDate);
 		});
-		display.classList.add('active');
+		display.classList.add('active', 'home-view');
 	} else if (display.classList.contains('active')) {
 		return;
 	}
@@ -117,6 +120,7 @@ export const renderAllTasks = (e) => {
 
 export const renderTodaysTasks = (e) => {
 	clearDisplay();
+	document.querySelector('.content-main').classList.add('today-view');
 	tasks.forEach((task) => {
 		if (task.dueDate.toLowerCase() == 'today') {
 			createTaskDisplay(task.title, task.dueDate);
@@ -127,6 +131,7 @@ export const renderTodaysTasks = (e) => {
 
 export const renderWeeksTasks = (e) => {
 	clearDisplay();
+	document.querySelector('.content-main').classList.add('week-view');
 	tasks.forEach((task) => {
 		if (task.dueDate.toLowerCase() == 'this week') {
 			createTaskDisplay(task.title, task.dueDate);
@@ -142,6 +147,11 @@ export const renderTasksByTag = (e) => {
 			createTaskDisplay(task.title, task.dueDate);
 		}
 	});
+
+	let _projectName = e.target.parentNode.firstChild.nextSibling.innerText;
+	document.querySelector('.content-main').classList.add(`${_projectName}-view`);
+	console.log(_projectName);
+	console.log(document.querySelector('.content-main').classList);
 	addTaskIcon();
 };
 
