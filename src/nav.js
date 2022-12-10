@@ -104,7 +104,7 @@ export const createProjectLink = (projectName) => {
     const name = document.createElement('p');
     name.innerHTML = projectName;
 
-	const remove = _removeButton();
+	const remove = removeButton();
 
 	projectLink.appendChild(projectSVG);
     projectLink.appendChild(name);
@@ -121,7 +121,7 @@ const addProject = (e) => {
     toggleActiveOff();
 }
 
-const _removeButton = () => {
+const removeButton = () => {
 	const btn = document.createElement('button');
 	btn.innerText = 'Remove';
 	btn.classList.add('remove-project-btn');
