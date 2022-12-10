@@ -90,6 +90,10 @@
 	transition: var(--transition-main);
 }
 
+.side-nav li p {
+	height: 100%;
+}
+
 .side-nav li.active {
 	background-color: var(--subcontainer-main-color);
 	border-bottom: 2px solid var(--container-alt-color);

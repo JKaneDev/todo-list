@@ -8,7 +8,7 @@ import logo from '../assets/logo.svg';
 import addTask from '../assets/add-task.svg';
 import { renderAllTasks, renderTodaysTasks, renderWeeksTasks, renderTasksByTag } from './task-display';
 import { renderAddTaskModal } from './add-task-modal';
-import { tasks, projects } from './task';
+import { projects } from './task';
 
 const navLinks = Array.from(document.querySelectorAll('.navigation'));
 const projectLinks = document.querySelector('.project-links');

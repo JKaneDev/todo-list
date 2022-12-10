@@ -5,6 +5,8 @@ import { renderAddTaskModal } from './add-task-modal';
 import addTask from '../assets/add-task.svg';
 import { taskDetailsModal } from './task-details-modal';
 import { renderEditTaskModal } from './edit-task-display';
+import { getCurrentDate, getTomorrowsDate } from './date-helpers';
+import { isThisWeek, parseISO, subDays, toDate } from 'date-fns';
 
 export const populateTasks = () => {
 	const gym = taskFactory(
@@ -27,7 +29,7 @@ export const populateTasks = () => {
 		'Code Wars Practice',
 		'Coding',
 		'Practice Data Structures',
-		'This Week',
+		'2022-12-15',
 		'Medium',
 		false
 	);
@@ -35,7 +37,7 @@ export const populateTasks = () => {
 		'Build To-Do List',
 		'The Odin Project',
 		'Javascript Course',
-		'This Week',
+		'2022-12-21',
 		'High',
 		false
 	);
@@ -49,15 +51,7 @@ const addTaskIcon = () => {
 	document.querySelector('.content-main').appendChild(btn);
 };
 
-export const getCurrentDate = () => {
-	const date = new Date();
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let currentDate = `${day}-${month}-${year}`;
 
-	return currentDate;
-}
 
 const createTaskDisplay = (name, dueDate) => {
 	const taskDisplay = document.querySelector('.content-main');
@@ -132,7 +126,7 @@ export const renderTodaysTasks = (e) => {
 	clearDisplay();
 	document.querySelector('.content-main').classList.add('today-view');
 	tasks.forEach((task) => {
-		if (task.dueDate.toLowerCase() == 'today') {
+		if (task.dueDate == getCurrentDate()) {
 			createTaskDisplay(task.title, task.dueDate);
 		}
 	});
@@ -143,7 +137,7 @@ export const renderWeeksTasks = (e) => {
 	clearDisplay();
 	document.querySelector('.content-main').classList.add('week-view');
 	tasks.forEach((task) => {
-		if (task.dueDate.toLowerCase() == 'this week') {
+		if (isThisWeek(subDays(toDate(parseISO(task.dueDate)), 1))) {
 			createTaskDisplay(task.title, task.dueDate);
 		}
 	});
@@ -157,11 +151,7 @@ export const renderTasksByTag = (e) => {
 			createTaskDisplay(task.title, task.dueDate);
 		}
 	});
-
-	let _projectName = e.target.parentNode.firstChild.nextSibling.innerText;
-	document.querySelector('.content-main').classList.add(`${_projectName}-view`);
-	console.log(_projectName);
-	console.log(document.querySelector('.content-main').classList);
+	
 	addTaskIcon();
 };
 

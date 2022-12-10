@@ -1,16 +1,10 @@
 import {
 	taskFactory,
-	tasks,
 	checkTagsForNewCategory,
 	updateProjectLinks,
 } from './task';
 import { preventDuplicates } from './edit-task-display';
-import {
-	renderAllTasks,
-	renderTodaysTasks,
-	renderWeeksTasks,
-	renderTasksByTag,
-} from './task-display';
+import { renderAllTasks } from './task-display';
 
 const modalTitle = () => {
 	const modalTaskTitle = document.createElement('input');
@@ -150,6 +144,7 @@ const confirmBtn = () => {
 const toggleModalActive = () => {
 	const container = document.querySelector('.container');
 	const modal = document.querySelector('.modal-add-task');
+
 	container.classList.toggle('modal-active');
 	if (container.classList.contains('modal-active')) {
 		modal.style.filter = 'blur(0)';
@@ -195,10 +190,13 @@ export const renderAddTaskModal = () => {
 
 const closeModal = () => {
 	const body = document.querySelector('.body');
-    const modal = document.querySelector('.modal-add-task');
+	const modal = document.querySelector('.modal-add-task');
 	body.removeChild(document.querySelector('.modal-add-task'));
 	toggleModalActive();
-    if (modal.classList.contains('edit-mode')) modal.classList.remove('edit-mode');
+
+	if (modal.classList.contains('edit-mode'))
+		modal.classList.remove('edit-mode');
+
 	document.querySelector('.container').style.filter = 'blur(0)';
 };
 
@@ -213,22 +211,8 @@ const getPriorityFromModal = () => {
 };
 
 const updateDisplay = () => {
-	const display = document.querySelector('.content-main');
-	switch (true) {
-		case display.classList.contains('home-view'):
-			renderAllTasks();
-		case display.classList.contains('today-view'):
-			renderTodaysTasks();
-		case display.classList.contains('week-view'):
-			renderWeeksTasks();
-	}
+	renderAllTasks();
 };
-
-/* Bugs
-    - Tasks only render when the text of the link is clicked, 
-    must display when any part of the link is clicked, except remove button
-    - inputted text dates must be formatted. E.g. 'today, tomorrow etc'
-*/
 
 const getTaskFromInput = () => {
 	const title = document.querySelector('.modal-title').value;
@@ -238,12 +222,15 @@ const getTaskFromInput = () => {
 	const priority = getPriorityFromModal();
 	const status = false;
 
-	preventDuplicates(title);
+	if (document.querySelector('.modal-add-task').classList.contains('edit-mode')) {
+        preventDuplicates(title);
+    }
+
+    
 	const newTask = taskFactory(title, tag, desc, date, priority, status);
 
 	updateProjectLinks();
 	checkTagsForNewCategory();
 	closeModal();
 	updateDisplay();
-	console.log(tasks);
 };
