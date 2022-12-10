@@ -195,8 +195,10 @@ export const renderAddTaskModal = () => {
 
 const closeModal = () => {
 	const body = document.querySelector('.body');
+    const modal = document.querySelector('.modal-add-task');
 	body.removeChild(document.querySelector('.modal-add-task'));
 	toggleModalActive();
+    if (modal.classList.contains('edit-mode')) modal.classList.remove('edit-mode');
 	document.querySelector('.container').style.filter = 'blur(0)';
 };
 

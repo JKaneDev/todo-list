@@ -1,4 +1,5 @@
 import { createProjectLink } from './nav';
+import { getCurrentDate, getTomorrowsDate } from './date-helpers';
 
 export const tasks = [];
 export const projects = [];
@@ -12,31 +13,32 @@ export const taskFactory = (title, tag, desc, dueDate, priority, status) => {
 		priority,
 		status: false,
 	};
-	
+	if (task.dueDate.toLowerCase() == 'today') task.dueDate = getCurrentDate();
+	if (task.dueDate.toLowerCase() == 'tomorrow') task.dueDate = getTomorrowsDate();
 	tasks.push(task);
 	if (!projects.includes(task.tag)) projects.push(task.tag);
 	
 
 	return {
 		task,
-		editTitle(title) {
-			task.title = title;
-		},
-		editTag(tag) {
-			task.tag = tag;
-		},
-		editDesc(desc) {
-			task.desc = desc;
-		},
-		editDueDate(dueDate) {
-			task.dueDate = dueDate;
-		},
-		editPriority(priority) {
-			task.priority = priority;
-		},
-		editStatus(status) {
-			task.status = status;
-		},
+		// editTitle(title) {
+		// 	task.title = title;
+		// },
+		// editTag(tag) {
+		// 	task.tag = tag;
+		// },
+		// editDesc(desc) {
+		// 	task.desc = desc;
+		// },
+		// editDueDate(dueDate) {
+		// 	task.dueDate = dueDate;
+		// },
+		// editPriority(priority) {
+		// 	task.priority = priority;
+		// },
+		// editStatus(status) {
+		// 	task.status = status;
+		// },
 	};
 };
 
